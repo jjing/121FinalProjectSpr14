@@ -43,17 +43,19 @@ public class GameScreen implements Screen, GestureListener {
 
 	@Override
 	public void show() {
-		//Gdx.input.setInputProcessor(new GestureDetector(this));
+		Gdx.input.setInputProcessor(new GestureDetector(this));
 	}
 
 	@Override
 	public void hide() {
-		//Gdx.input.setInputProcessor(null);
+		Gdx.input.setInputProcessor(null);
 	}
 
 	@Override public boolean fling(float velocityX, float velocityY, int button) {
-		//if (velocityY < -100) trafficGame.playerCar.tryMoveUp();
-		//if (velocityY > 100) trafficGame.playerCar.tryMoveDown();
+		if (velocityY < -100) GameWorld.gameWorldPhysics.setGravity( new Vector2(0,1) );
+		else if (velocityY > 100)  GameWorld.gameWorldPhysics.setGravity( new Vector2(0,-1) );
+		else if (velocityX < -100) GameWorld.gameWorldPhysics.setGravity( new Vector2(-1,0) );
+		else if (velocityX > 100)  GameWorld.gameWorldPhysics.setGravity( new Vector2(1,0) );
 		return false;
 	}
 
