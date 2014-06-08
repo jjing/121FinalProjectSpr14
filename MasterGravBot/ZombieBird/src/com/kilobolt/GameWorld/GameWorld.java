@@ -1,20 +1,27 @@
 package com.kilobolt.GameWorld;
 
+import static com.kilobolt.ZBHelpers.B2DVars.PPM;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
-import com.kilobolt.GameObjects.Bird;
-import com.kilobolt.GameObjects.ScrollHandler;
+import com.badlogic.gdx.math.Vector2;
+import com.kilobolt.GameObjects.GravBot;
+import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.kilobolt.ZBHelpers.AssetLoader;
+
 
 public class GameWorld {
 
-	private Bird bird;
-	private ScrollHandler scroller;
+	private GravBot gravBot;
 	private Rectangle ground;
 	private int score = 0;
 	private float runTime = 0;
 	private int midPointY;
 	private GameRenderer renderer;
+	public World gameWorldPhysics; 
 	
 	private GameState currentState;
 
@@ -23,17 +30,18 @@ public class GameWorld {
 	}
 
 	public GameWorld(int midPointY) {
+		gameWorldPhysics = new World( new Vector2( 0 , 9 ) , true );
 		currentState = GameState.MENU;
 		this.midPointY = midPointY;
-		bird = new Bird(33, midPointY - 5, 17, 12);
-		// The grass should start 66 pixels below the midPointY
-		scroller = new ScrollHandler(this, midPointY + 66);
+		createGravBot();
 		ground = new Rectangle(0, midPointY + 66, 137, 11);
 	}
 
 	public void update(float delta) {
+		gameWorldPhysics.step(delta, 3, 3);
+		gravBot.update(delta);
 		runTime += delta;
-
+		
 		switch (currentState) {
 		case READY:
 		case MENU:
@@ -48,10 +56,11 @@ public class GameWorld {
 		}
 
 	}
+	
 
 	private void updateReady(float delta) {
-		bird.updateReady(runTime);
-		scroller.updateReady(delta);
+		//bird.updateReady(runTime);
+		//scroller.updateReady(delta);
 	}
 
 	public void updateRunning(float delta) {
@@ -59,49 +68,37 @@ public class GameWorld {
 			delta = .15f;
 		}
 
-		bird.update(delta);
-		scroller.update(delta);
+		//bird.update(delta);
+		//scroller.update(delta);
 
-		if (scroller.collides(bird) && bird.isAlive()) {
-			scroller.stop();
-			bird.die();
-			AssetLoader.dead.play();
-			renderer.prepareTransition(255, 255, 255, .3f);
-
-			AssetLoader.fall.play();
-		}
-
-		if (Intersector.overlaps(bird.getBoundingCircle(), ground)) {
-
-			if (bird.isAlive()) {
-				AssetLoader.dead.play();
-				renderer.prepareTransition(255, 255, 255, .3f);
-
-				bird.die();
-			}
-
-			scroller.stop();
-			bird.decelerate();
-			currentState = GameState.GAMEOVER;
-
-			if (score > AssetLoader.getHighScore()) {
-				AssetLoader.setHighScore(score);
-				currentState = GameState.HIGHSCORE;
-			}
-		}
 	}
 
-	public Bird getBird() {
-		return bird;
+	public GravBot getGravBot() {
+		return gravBot;
 
 	}
 
 	public int getMidPointY() {
 		return midPointY;
 	}
-
-	public ScrollHandler getScroller() {
-		return scroller;
+	
+	private void createGravBot(){
+		BodyDef bdef = new BodyDef();
+		FixtureDef fdef = new FixtureDef();
+		PolygonShape shape = new PolygonShape();
+			
+		//create gravBot
+		bdef.position.set( 100 / PPM , 100 / PPM );
+		bdef.type = BodyType.DynamicBody;
+		Body body = gameWorldPhysics.createBody(bdef);
+		
+		shape.setAsBox( 50 / PPM ,  5 / PPM );
+		fdef.shape = shape;
+		body.createFixture(fdef);
+		
+		//create GravBot
+		gravBot = new GravBot( body );
+			
 	}
 
 	public int getScore() {
@@ -123,8 +120,6 @@ public class GameWorld {
 
 	public void restart() {
 		score = 0;
-		bird.onRestart(midPointY - 5);
-		scroller.onRestart();
 		ready();
 	}
 

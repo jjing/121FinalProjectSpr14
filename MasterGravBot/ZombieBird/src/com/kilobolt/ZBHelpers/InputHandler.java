@@ -5,12 +5,12 @@ import java.util.List;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
-import com.kilobolt.GameObjects.Bird;
+import com.kilobolt.GameObjects.GravBot;
 import com.kilobolt.GameWorld.GameWorld;
 import com.kilobolt.ui.SimpleButton;
 
 public class InputHandler implements InputProcessor {
-	private Bird myBird;
+	private GravBot myGravBot;
 	private GameWorld myWorld;
 
 	private List<SimpleButton> menuButtons;
@@ -23,10 +23,10 @@ public class InputHandler implements InputProcessor {
 	public InputHandler(GameWorld myWorld, float scaleFactorX,
 			float scaleFactorY) {
 		this.myWorld = myWorld;
-		myBird = myWorld.getBird();
+		myGravBot = myWorld.getGravBot();
 
 		int midPointY = myWorld.getMidPointY();
-
+		
 		this.scaleFactorX = scaleFactorX;
 		this.scaleFactorY = scaleFactorY;
 
@@ -47,9 +47,9 @@ public class InputHandler implements InputProcessor {
 			playButton.isTouchDown(screenX, screenY);
 		} else if (myWorld.isReady()) {
 			myWorld.start();
-			myBird.onClick();
+
 		} else if (myWorld.isRunning()) {
-			myBird.onClick();
+
 		}
 
 		if (myWorld.isGameOver() || myWorld.isHighScore()) {
@@ -86,7 +86,6 @@ public class InputHandler implements InputProcessor {
 				myWorld.start();
 			}
 
-			myBird.onClick();
 
 			if (myWorld.isGameOver() || myWorld.isHighScore()) {
 				myWorld.restart();

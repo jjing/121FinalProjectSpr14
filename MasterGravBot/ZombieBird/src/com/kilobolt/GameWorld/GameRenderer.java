@@ -15,31 +15,30 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.kilobolt.GameObjects.Bird;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.kilobolt.GameObjects.Grass;
-import com.kilobolt.GameObjects.Pipe;
-import com.kilobolt.GameObjects.ScrollHandler;
+import com.kilobolt.GameObjects.GravBot;
 import com.kilobolt.TweenAccessors.Value;
 import com.kilobolt.TweenAccessors.ValueAccessor;
 import com.kilobolt.ZBHelpers.AssetLoader;
 import com.kilobolt.ZBHelpers.InputHandler;
 import com.kilobolt.ui.SimpleButton;
+import static com.kilobolt.ZBHelpers.B2DVars.PPM;
+
 
 public class GameRenderer {
 
 	private GameWorld myWorld;
 	private OrthographicCamera cam;
 	private ShapeRenderer shapeRenderer;
-
+	private Box2DDebugRenderer b2dr;
+	
 	private SpriteBatch batcher;
 
 	private int midPointY;
 
 	// Game Objects
-	private Bird bird;
-	private ScrollHandler scroller;
-	private Grass frontGrass, backGrass;
-	private Pipe pipe1, pipe2, pipe3;
+	private GravBot gravBot;
 
 	// Game Assets
 	private TextureRegion bg, grass, birdMid, skullUp, skullDown, bar, ready,
@@ -56,13 +55,16 @@ public class GameRenderer {
 
 	public GameRenderer(GameWorld world, int gameHeight, int midPointY) {
 		myWorld = world;
-
+		b2dr = new Box2DDebugRenderer();
+		
 		this.midPointY = midPointY;
 		this.menuButtons = ((InputHandler) Gdx.input.getInputProcessor())
 				.getMenuButtons();
 
 		cam = new OrthographicCamera();
-		cam.setToOrtho(true, 136, gameHeight);
+		
+		// change it to cam.setToOrtho(true, 132 /PPM  , gameHeight/PPM); to have the camera scale down to box2d world
+		cam.setToOrtho(true, 132  , gameHeight);
 
 		batcher = new SpriteBatch();
 		batcher.setProjectionMatrix(cam.combined);
@@ -77,13 +79,7 @@ public class GameRenderer {
 	}
 
 	private void initGameObjects() {
-		bird = myWorld.getBird();
-		scroller = myWorld.getScroller();
-		frontGrass = scroller.getFrontGrass();
-		backGrass = scroller.getBackGrass();
-		pipe1 = scroller.getPipe1();
-		pipe2 = scroller.getPipe2();
-		pipe3 = scroller.getPipe3();
+		gravBot = myWorld.getGravBot();
 	}
 
 	private void initAssets() {
@@ -104,15 +100,15 @@ public class GameRenderer {
 		noStar = AssetLoader.noStar;
 	}
 
-	private void drawGrass() {
+	/*(private void drawGrass() {
 		// Draw the grass
 		batcher.draw(grass, frontGrass.getX(), frontGrass.getY(),
 				frontGrass.getWidth(), frontGrass.getHeight());
 		batcher.draw(grass, backGrass.getX(), backGrass.getY(),
 				backGrass.getWidth(), backGrass.getHeight());
-	}
+	}*/
 
-	private void drawSkulls() {
+	/*private void drawSkulls() {
 
 		batcher.draw(skullUp, pipe1.getX() - 1,
 				pipe1.getY() + pipe1.getHeight() - 14, 24, 14);
@@ -128,9 +124,9 @@ public class GameRenderer {
 				pipe3.getY() + pipe3.getHeight() - 14, 24, 14);
 		batcher.draw(skullDown, pipe3.getX() - 1,
 				pipe3.getY() + pipe3.getHeight() + 45, 24, 14);
-	}
+	}*/
 
-	private void drawPipes() {
+	/*private void drawPipes() {
 		batcher.draw(bar, pipe1.getX(), pipe1.getY(), pipe1.getWidth(),
 				pipe1.getHeight());
 		batcher.draw(bar, pipe1.getX(), pipe1.getY() + pipe1.getHeight() + 45,
@@ -145,31 +141,31 @@ public class GameRenderer {
 				pipe3.getHeight());
 		batcher.draw(bar, pipe3.getX(), pipe3.getY() + pipe3.getHeight() + 45,
 				pipe3.getWidth(), midPointY + 66 - (pipe3.getHeight() + 45));
-	}
+	}*/
 
-	private void drawBirdCentered(float runTime) {
+	/*private void drawBirdCentered(float runTime) {
 		batcher.draw(birdAnimation.getKeyFrame(runTime), 59, bird.getY() - 15,
 				bird.getWidth() / 2.0f, bird.getHeight() / 2.0f,
-				bird.getWidth(), bird.getHeight(), 1, 1, bird.getRotation());
-	}
+				bird.getWidth(), bird.getHeight(), 1, 1, 0);
+	}*/
 
-	private void drawBird(float runTime) {
+	/*private void drawBird(float runTime) {
 
 		if (bird.shouldntFlap()) {
 			batcher.draw(birdMid, bird.getX(), bird.getY(),
 					bird.getWidth() / 2.0f, bird.getHeight() / 2.0f,
-					bird.getWidth(), bird.getHeight(), 1, 1, bird.getRotation());
+					bird.getWidth(), bird.getHeight(), 1, 1, 0);
 
 		} else {
 			batcher.draw(birdAnimation.getKeyFrame(runTime), bird.getX(),
 					bird.getY(), bird.getWidth() / 2.0f,
 					bird.getHeight() / 2.0f, bird.getWidth(), bird.getHeight(),
-					1, 1, bird.getRotation());
+					1, 1, 0);
 		}
 
-	}
+	}*/
 
-	private void drawMenuUI() {
+	/*private void drawMenuUI() {
 		batcher.draw(zbLogo, 136 / 2 - 56, midPointY - 50,
 				zbLogo.getRegionWidth() / 1.2f, zbLogo.getRegionHeight() / 1.2f);
 
@@ -177,7 +173,7 @@ public class GameRenderer {
 			button.draw(batcher);
 		}
 
-	}
+	}*/
 
 	private void drawScoreboard() {
 		batcher.draw(scoreboard, 22, midPointY - 30, 97, 37);
@@ -247,58 +243,11 @@ public class GameRenderer {
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-
-		shapeRenderer.begin(ShapeType.Filled);
-
-		// Draw Background color
-		shapeRenderer.setColor(55 / 255.0f, 80 / 255.0f, 100 / 255.0f, 1);
-		shapeRenderer.rect(0, 0, 136, midPointY + 66);
-
-		// Draw Grass
-		shapeRenderer.setColor(111 / 255.0f, 186 / 255.0f, 45 / 255.0f, 1);
-		shapeRenderer.rect(0, midPointY + 66, 136, 11);
-
-		// Draw Dirt
-		shapeRenderer.setColor(147 / 255.0f, 80 / 255.0f, 27 / 255.0f, 1);
-		shapeRenderer.rect(0, midPointY + 77, 136, 52);
-
-		shapeRenderer.end();
-
-		batcher.begin();
-		batcher.disableBlending();
-
-		batcher.draw(bg, 0, midPointY + 23, 136, 43);
-
-		drawPipes();
-
-		batcher.enableBlending();
-		drawSkulls();
-
-		if (myWorld.isRunning()) {
-			drawBird(runTime);
-			drawScore();
-		} else if (myWorld.isReady()) {
-			drawBird(runTime);
-			drawReady();
-		} else if (myWorld.isMenu()) {
-			drawBirdCentered(runTime);
-			drawMenuUI();
-		} else if (myWorld.isGameOver()) {
-			drawScoreboard();
-			drawBird(runTime);
-			drawGameOver();
-			drawRetry();
-		} else if (myWorld.isHighScore()) {
-			drawScoreboard();
-			drawBird(runTime);
-			drawHighScore();
-			drawRetry();
-		}
-
-		drawGrass();
-
-		batcher.end();
-		drawTransition(delta);
+		
+		///renderering our b2d colliders and gravbot 
+		batcher.setProjectionMatrix( cam.combined );
+		gravBot.render(batcher);
+		b2dr.render(myWorld.gameWorldPhysics, cam.combined);
 
 	}
 

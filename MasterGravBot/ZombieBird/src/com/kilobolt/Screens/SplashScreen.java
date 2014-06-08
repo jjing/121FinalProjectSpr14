@@ -43,6 +43,8 @@ public class SplashScreen implements Screen {
 		batcher = new SpriteBatch();
 	}
 
+	//Tween SplashScreen
+	//Then Load GameScreen
 	private void setupTween() {
 		Tween.registerAccessor(Sprite.class, new SpriteAccessor());
 		manager = new TweenManager();
