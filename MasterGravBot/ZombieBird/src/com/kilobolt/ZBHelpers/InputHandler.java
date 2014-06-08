@@ -9,6 +9,9 @@ import com.kilobolt.GameObjects.GravBot;
 import com.kilobolt.GameWorld.GameWorld;
 import com.kilobolt.ui.SimpleButton;
 
+//can use this class to take input from player and apply the change of gravity / etc if needed 
+//-myWorld.gameWorldPhysics can help applie changes to world gravity directly
+//added player ( GravBot ) just in case we need to applie directly
 public class InputHandler implements InputProcessor {
 	private GravBot myGravBot;
 	private GameWorld myWorld;
@@ -24,7 +27,7 @@ public class InputHandler implements InputProcessor {
 			float scaleFactorY) {
 		this.myWorld = myWorld;
 		myGravBot = myWorld.getGravBot();
-
+	
 		int midPointY = myWorld.getMidPointY();
 		
 		this.scaleFactorX = scaleFactorX;

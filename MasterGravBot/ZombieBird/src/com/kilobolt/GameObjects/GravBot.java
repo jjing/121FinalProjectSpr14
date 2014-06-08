@@ -9,6 +9,7 @@ import com.kilobolt.ZBHelpers.B2DSprite;
 
 
 //extends from b2dSprite to do all the work of animating sprites
+//main player
 public class GravBot extends B2DSprite {
 	
 	public GravBot( Body body ){

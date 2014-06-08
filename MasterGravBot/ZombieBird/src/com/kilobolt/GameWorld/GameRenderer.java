@@ -16,7 +16,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.kilobolt.GameObjects.Grass;
 import com.kilobolt.GameObjects.GravBot;
 import com.kilobolt.TweenAccessors.Value;
 import com.kilobolt.TweenAccessors.ValueAccessor;
@@ -30,6 +29,7 @@ public class GameRenderer {
 
 	private GameWorld myWorld;
 	private OrthographicCamera cam;
+	private OrthographicCamera b2dCam;
 	private ShapeRenderer shapeRenderer;
 	private Box2DDebugRenderer b2dr;
 	
@@ -62,10 +62,12 @@ public class GameRenderer {
 				.getMenuButtons();
 
 		cam = new OrthographicCamera();
-		
-		// change it to cam.setToOrtho(true, 132 /PPM  , gameHeight/PPM); to have the camera scale down to box2d world
-		cam.setToOrtho(true, 132  , gameHeight);
+		cam.setToOrtho(false, 132  , gameHeight );
 
+		//needed to render box2D Objects
+		b2dCam = new OrthographicCamera();
+		b2dCam.setToOrtho(false, 132 / PPM , gameHeight / PPM);
+		
 		batcher = new SpriteBatch();
 		batcher.setProjectionMatrix(cam.combined);
 		shapeRenderer = new ShapeRenderer();
@@ -99,81 +101,6 @@ public class GameRenderer {
 		star = AssetLoader.star;
 		noStar = AssetLoader.noStar;
 	}
-
-	/*(private void drawGrass() {
-		// Draw the grass
-		batcher.draw(grass, frontGrass.getX(), frontGrass.getY(),
-				frontGrass.getWidth(), frontGrass.getHeight());
-		batcher.draw(grass, backGrass.getX(), backGrass.getY(),
-				backGrass.getWidth(), backGrass.getHeight());
-	}*/
-
-	/*private void drawSkulls() {
-
-		batcher.draw(skullUp, pipe1.getX() - 1,
-				pipe1.getY() + pipe1.getHeight() - 14, 24, 14);
-		batcher.draw(skullDown, pipe1.getX() - 1,
-				pipe1.getY() + pipe1.getHeight() + 45, 24, 14);
-
-		batcher.draw(skullUp, pipe2.getX() - 1,
-				pipe2.getY() + pipe2.getHeight() - 14, 24, 14);
-		batcher.draw(skullDown, pipe2.getX() - 1,
-				pipe2.getY() + pipe2.getHeight() + 45, 24, 14);
-
-		batcher.draw(skullUp, pipe3.getX() - 1,
-				pipe3.getY() + pipe3.getHeight() - 14, 24, 14);
-		batcher.draw(skullDown, pipe3.getX() - 1,
-				pipe3.getY() + pipe3.getHeight() + 45, 24, 14);
-	}*/
-
-	/*private void drawPipes() {
-		batcher.draw(bar, pipe1.getX(), pipe1.getY(), pipe1.getWidth(),
-				pipe1.getHeight());
-		batcher.draw(bar, pipe1.getX(), pipe1.getY() + pipe1.getHeight() + 45,
-				pipe1.getWidth(), midPointY + 66 - (pipe1.getHeight() + 45));
-
-		batcher.draw(bar, pipe2.getX(), pipe2.getY(), pipe2.getWidth(),
-				pipe2.getHeight());
-		batcher.draw(bar, pipe2.getX(), pipe2.getY() + pipe2.getHeight() + 45,
-				pipe2.getWidth(), midPointY + 66 - (pipe2.getHeight() + 45));
-
-		batcher.draw(bar, pipe3.getX(), pipe3.getY(), pipe3.getWidth(),
-				pipe3.getHeight());
-		batcher.draw(bar, pipe3.getX(), pipe3.getY() + pipe3.getHeight() + 45,
-				pipe3.getWidth(), midPointY + 66 - (pipe3.getHeight() + 45));
-	}*/
-
-	/*private void drawBirdCentered(float runTime) {
-		batcher.draw(birdAnimation.getKeyFrame(runTime), 59, bird.getY() - 15,
-				bird.getWidth() / 2.0f, bird.getHeight() / 2.0f,
-				bird.getWidth(), bird.getHeight(), 1, 1, 0);
-	}*/
-
-	/*private void drawBird(float runTime) {
-
-		if (bird.shouldntFlap()) {
-			batcher.draw(birdMid, bird.getX(), bird.getY(),
-					bird.getWidth() / 2.0f, bird.getHeight() / 2.0f,
-					bird.getWidth(), bird.getHeight(), 1, 1, 0);
-
-		} else {
-			batcher.draw(birdAnimation.getKeyFrame(runTime), bird.getX(),
-					bird.getY(), bird.getWidth() / 2.0f,
-					bird.getHeight() / 2.0f, bird.getWidth(), bird.getHeight(),
-					1, 1, 0);
-		}
-
-	}*/
-
-	/*private void drawMenuUI() {
-		batcher.draw(zbLogo, 136 / 2 - 56, midPointY - 50,
-				zbLogo.getRegionWidth() / 1.2f, zbLogo.getRegionHeight() / 1.2f);
-
-		for (SimpleButton button : menuButtons) {
-			button.draw(batcher);
-		}
-
-	}*/
 
 	private void drawScoreboard() {
 		batcher.draw(scoreboard, 22, midPointY - 30, 97, 37);
@@ -247,7 +174,8 @@ public class GameRenderer {
 		///renderering our b2d colliders and gravbot 
 		batcher.setProjectionMatrix( cam.combined );
 		gravBot.render(batcher);
-		b2dr.render(myWorld.gameWorldPhysics, cam.combined);
+		
+		b2dr.render(myWorld.gameWorldPhysics, b2dCam.combined);
 
 	}
 

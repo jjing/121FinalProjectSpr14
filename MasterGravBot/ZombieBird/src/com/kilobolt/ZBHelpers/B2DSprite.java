@@ -31,7 +31,7 @@ public class B2DSprite{
 		animation.update(dt);
 	}
 	
-	//should render our sprite correctly but not working right not sure if this is the issue
+	//render sprites correctly
 	public void render(SpriteBatch sb){
 		sb.begin();
 		sb.draw(

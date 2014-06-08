@@ -59,17 +59,13 @@ public class GameWorld {
 	
 
 	private void updateReady(float delta) {
-		//bird.updateReady(runTime);
-		//scroller.updateReady(delta);
+
 	}
 
 	public void updateRunning(float delta) {
 		if (delta > .15f) {
 			delta = .15f;
 		}
-
-		//bird.update(delta);
-		//scroller.update(delta);
 
 	}
 
@@ -89,7 +85,7 @@ public class GameWorld {
 			
 		//create gravBot
 		bdef.position.set( 100 / PPM , 100 / PPM );
-		bdef.type = BodyType.DynamicBody;
+		bdef.type = BodyType.StaticBody;
 		Body body = gameWorldPhysics.createBody(bdef);
 		
 		shape.setAsBox( 50 / PPM ,  5 / PPM );

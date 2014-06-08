@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+//we can keep this to load all assest or manuel have them added to each class as we create them within there class
 public class AssetLoader {
 
 	public static Texture texture, logoTexture;
