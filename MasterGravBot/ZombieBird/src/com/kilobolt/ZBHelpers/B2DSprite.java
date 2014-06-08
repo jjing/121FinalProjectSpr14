@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import static com.kilobolt.ZBHelpers.B2DVars.PPM;
+import com.badlogic.gdx.math.Rectangle;
 
 
 //class that will allow us to create new classes with images that will be animated correctly
@@ -15,6 +16,8 @@ public class B2DSprite{
 	protected Animation animation;
 	protected float width;
 	protected float height;
+	private Rectangle bounds = new Rectangle();
+	
 	
 	public B2DSprite(Body body){
 		this.body = body;
