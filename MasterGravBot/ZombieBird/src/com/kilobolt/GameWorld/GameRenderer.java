@@ -17,11 +17,13 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.kilobolt.GameObjects.GravBot;
+import com.kilobolt.GameObjects.Obstacle;
 import com.kilobolt.TweenAccessors.Value;
 import com.kilobolt.TweenAccessors.ValueAccessor;
 import com.kilobolt.ZBHelpers.AssetLoader;
 import com.kilobolt.ZBHelpers.InputHandler;
 import com.kilobolt.ui.SimpleButton;
+
 import static com.kilobolt.ZBHelpers.B2DVars.PPM;
 
 
@@ -39,6 +41,8 @@ public class GameRenderer {
 
 	// Game Objects
 	private GravBot gravBot;
+	private List<Obstacle> obs;
+
 
 	// Game Assets
 	private TextureRegion bg, grass, birdMid, skullUp, skullDown, bar, ready,
@@ -55,7 +59,7 @@ public class GameRenderer {
 
 	public GameRenderer(GameWorld world, int gameHeight, int midPointY) {
 		myWorld = world;
-		b2dr = new Box2DDebugRenderer();
+		//b2dr = new Box2DDebugRenderer();
 		
 		this.midPointY = midPointY;
 		this.menuButtons = ((InputHandler) Gdx.input.getInputProcessor())
@@ -175,7 +179,11 @@ public class GameRenderer {
 		batcher.setProjectionMatrix( cam.combined );
 		gravBot.render(batcher);
 		
-		b2dr.render(myWorld.gameWorldPhysics, b2dCam.combined);
+		for (Obstacle obstacles : obs) {
+			obstacles.render(batcher);
+		}
+		
+		//b2dr.render(myWorld.gameWorldPhysics, b2dCam.combined);
 
 	}
 
