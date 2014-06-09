@@ -6,9 +6,11 @@ import com.kilobolt.ZBHelpers.AssetLoader;
 
 public class ZBGame extends Game {
 
+	private boolean inMainMenu;
 	@Override
 	public void create() {
 		AssetLoader.load();
+		inMainMenu = true;
 		setScreen(new SplashScreen(this));
 	}
 

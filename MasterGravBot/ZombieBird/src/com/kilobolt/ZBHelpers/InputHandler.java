@@ -15,7 +15,7 @@ import com.kilobolt.ui.SimpleButton;
 public class InputHandler implements InputProcessor {
 	private GravBot myGravBot;
 	private GameWorld myWorld;
-
+	
 	private List<SimpleButton> menuButtons;
 
 	private SimpleButton playButton;
@@ -40,9 +40,11 @@ public class InputHandler implements InputProcessor {
 				AssetLoader.playButtonDown);
 		menuButtons.add(playButton);
 	}
+	
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		
 		screenX = scaleX(screenX);
 		screenY = scaleY(screenY);
 

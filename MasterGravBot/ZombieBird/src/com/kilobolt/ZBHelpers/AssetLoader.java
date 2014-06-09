@@ -12,17 +12,17 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 //we can keep this to load all assest or manuel have them added to each class as we create them within there class
 public class AssetLoader {
 
-	public static Texture texture, logoTexture;
+	public static Texture texture, logoTexture, gravTextTex, botTextTex, touchTextTex;
 	public static TextureRegion logo, zbLogo, bg, grass, bird, birdDown,
 			birdUp, skullUp, skullDown, bar, playButtonUp, playButtonDown,
-			ready, gameOver, highScore, scoreboard, star, noStar, retry;
+			ready, gameOver, highScore, scoreboard, star, noStar, retry, gravText ,botText, touchText;
 	public static Animation birdAnimation;
 	public static Sound dead, flap, coin, fall;
 	public static BitmapFont font, shadow, whiteFont;
 	private static Preferences prefs;
 
-	public static void load() {
-
+	public static void load() {	
+		
 		logoTexture = new Texture(Gdx.files.internal("data/logo.png"));
 		logoTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
@@ -31,6 +31,20 @@ public class AssetLoader {
 		texture = new Texture(Gdx.files.internal("data/texture.png"));
 		texture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
+		//-------------------------Load MainMenu Assets---------------------------------//
+		
+		gravTextTex = new Texture(Gdx.files.internal("data/gravTitleText.png"));
+		gravTextTex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		gravText = new TextureRegion( gravTextTex, 0 , 0, 512, 128 );
+		
+		botTextTex = new Texture(Gdx.files.internal("data/botTitleText.png"));
+		botTextTex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		botText = new TextureRegion( botTextTex, 0 , 0, 512, 128 );
+		
+		touchTextTex = new Texture(Gdx.files.internal("data/touchToPlayText.png"));
+		touchTextTex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		touchText = new TextureRegion( touchTextTex, 0 , 0, 256, 128 );
+		
 		playButtonUp = new TextureRegion(texture, 0, 83, 29, 16);
 		playButtonDown = new TextureRegion(texture, 29, 83, 29, 16);
 		playButtonUp.flip(false, true);
