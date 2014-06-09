@@ -28,6 +28,7 @@ public class SplashScreen implements Screen {
 
 	@Override
 	public void show() {
+		
 		sprite = new Sprite(AssetLoader.logo);
 		sprite.setColor(1, 1, 1, 0);
 
@@ -46,20 +47,25 @@ public class SplashScreen implements Screen {
 	//Tween SplashScreen
 	//Then Load GameScreen
 	private void setupTween() {
+		/*
 		Tween.registerAccessor(Sprite.class, new SpriteAccessor());
 		manager = new TweenManager();
 
 		TweenCallback cb = new TweenCallback() {
 			@Override
 			public void onEvent(int type, BaseTween<?> source) {
+		*/	
 				game.setScreen(new GameScreen());
+		/*
 			}
 		};
 
+		
 		Tween.to(sprite, SpriteAccessor.ALPHA, .8f).target(1)
 				.ease(TweenEquations.easeInOutQuad).repeatYoyo(1, .4f)
 				.setCallback(cb).setCallbackTriggers(TweenCallback.COMPLETE)
 				.start(manager);
+		*/
 	}
 
 	@Override

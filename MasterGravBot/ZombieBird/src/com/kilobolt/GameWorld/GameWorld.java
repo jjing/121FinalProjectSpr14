@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.kilobolt.GameObjects.GravBot;
 import com.badlogic.gdx.physics.box2d.*;
@@ -21,7 +22,8 @@ public class GameWorld {
 	private float runTime = 0;
 	private int midPointY;
 	private GameRenderer renderer;
-	public World gameWorldPhysics; 
+	public static World gameWorldPhysics; 
+	public float Gravity = 0;
 	
 	private GameState currentState;
 
@@ -30,7 +32,7 @@ public class GameWorld {
 	}
 
 	public GameWorld(int midPointY) {
-		gameWorldPhysics = new World( new Vector2( 0 , 9 ) , true );
+		gameWorldPhysics = new World( new Vector2( 0 , 0 ) , false );
 		currentState = GameState.MENU;
 		this.midPointY = midPointY;
 		createGravBot();
@@ -57,6 +59,7 @@ public class GameWorld {
 
 	}
 	
+
 
 	private void updateReady(float delta) {
 
@@ -85,12 +88,13 @@ public class GameWorld {
 			
 		//create gravBot
 		bdef.position.set( 100 / PPM , 100 / PPM );
-		bdef.type = BodyType.StaticBody;
+		bdef.type = BodyType.DynamicBody;
 		Body body = gameWorldPhysics.createBody(bdef);
 		
-		shape.setAsBox( 50 / PPM ,  5 / PPM );
-		fdef.shape = shape;
-		body.createFixture(fdef);
+		
+		//shape.setAsBox( 50 / PPM ,  5 / PPM );
+		//fdef.shape = shape;
+		//body.createFixture(fdef);
 		
 		//create GravBot
 		gravBot = new GravBot( body );
@@ -141,6 +145,11 @@ public class GameWorld {
 
 	public void setRenderer(GameRenderer renderer) {
 		this.renderer = renderer;
+	}
+
+	public void setGravity(int i, int j) {
+		Vector2 gravF = new Vector2(i,j);
+		gameWorldPhysics.setGravity(gravF);
 	}
 
 }
