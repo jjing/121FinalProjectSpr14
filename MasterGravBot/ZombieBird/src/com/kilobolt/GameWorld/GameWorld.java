@@ -40,6 +40,7 @@ public class GameWorld {
 		gameWorldPhysics = new World( new Vector2( 0 , 0 ) , false );
 		currentState = GameState.MENU;
 		this.midPointY = midPointY;
+		obs = new ArrayList<Obstacle>();
 		createGravBot();
 		createObstacle(16, 120);
 		createObstacle(48, 120);

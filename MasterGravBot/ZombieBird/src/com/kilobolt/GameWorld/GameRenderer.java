@@ -179,9 +179,9 @@ public class GameRenderer {
 		batcher.setProjectionMatrix( cam.combined );
 		gravBot.render(batcher);
 		
-		for (Obstacle obstacles : obs) {
-			obstacles.render(batcher);
-		}
+	//	for (Obstacle obstacles : obs) {
+		//	obstacles.render(batcher);
+		//}
 		
 		//b2dr.render(myWorld.gameWorldPhysics, b2dCam.combined);
 
