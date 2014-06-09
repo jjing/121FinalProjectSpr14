@@ -12,8 +12,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 //we can keep this to load all assest or manuel have them added to each class as we create them within there class
 public class AssetLoader {
 
-	public static Texture texture, logoTexture, gravTextTex, botTextTex, touchTextTex;
-	public static TextureRegion logo, zbLogo, bg, grass, bird, birdDown,
+	public static Texture texture, gravTextTex, botTextTex, touchTextTex;
+	public static TextureRegion zbLogo, bg, grass, bird, birdDown,
 			birdUp, skullUp, skullDown, bar, playButtonUp, playButtonDown,
 			ready, gameOver, highScore, scoreboard, star, noStar, retry, gravText ,botText, touchText;
 	public static Animation birdAnimation;
@@ -22,11 +22,6 @@ public class AssetLoader {
 	private static Preferences prefs;
 
 	public static void load() {	
-		
-		logoTexture = new Texture(Gdx.files.internal("data/logo.png"));
-		logoTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-		logo = new TextureRegion(logoTexture, 0, 0, 512, 114);
 
 		texture = new Texture(Gdx.files.internal("data/texture.png"));
 		texture.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
