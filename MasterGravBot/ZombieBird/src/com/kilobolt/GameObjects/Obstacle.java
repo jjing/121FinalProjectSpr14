@@ -12,5 +12,6 @@ public class Obstacle extends B2DSprite {
 		Texture tex =  new Texture(Gdx.files.internal("data/Obstacle.png"));
 		TextureRegion[] GravBotAnimations = TextureRegion.split(tex, 32, 32)[0];
 		setAnimation( GravBotAnimations , 1 / 12f );
+		//hello
 	}
 }
