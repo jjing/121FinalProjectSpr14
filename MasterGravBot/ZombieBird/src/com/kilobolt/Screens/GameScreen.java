@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.kilobolt.GameWorld.GameRenderer;
 import com.kilobolt.GameWorld.GameWorld;
 import com.kilobolt.ZBHelpers.InputHandler;
+import com.kilobolt.ZBHelpers.myContactListener;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
@@ -28,6 +29,7 @@ public class GameScreen implements Screen, GestureListener {
 		Gdx.input.setInputProcessor(new InputHandler(world, screenWidth / gameWidth, screenHeight / gameHeight));
 		renderer = new GameRenderer(world, (int) gameHeight, midPointY);
 		world.setRenderer(renderer);
+		world.setContactListener(new myContactListener(world));
 	}
 
 	@Override

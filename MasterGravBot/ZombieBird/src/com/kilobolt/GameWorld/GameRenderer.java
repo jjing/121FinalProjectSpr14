@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.kilobolt.GameObjects.Goal;
 import com.kilobolt.GameObjects.GravBot;
 import com.kilobolt.GameObjects.Obstacle;
 import com.kilobolt.TweenAccessors.Value;
@@ -42,6 +43,7 @@ public class GameRenderer {
 	// Game Objects
 	private GravBot gravBot;
 	private List<Obstacle> obs;
+	private Goal goal;
 
 	// Game Assets
 	private TextureRegion bg, grass, birdMid, skullUp, skullDown, bar, ready,
@@ -86,6 +88,7 @@ public class GameRenderer {
 	private void initGameObjects() {
 		gravBot = myWorld.getGravBot();
 		obs = myWorld.obs;
+		goal = myWorld.goal;
 	}
 
 	private void initAssets() {
@@ -181,6 +184,7 @@ public class GameRenderer {
 		for (Obstacle obstacles : obs) {
 			obstacles.render(batcher);
 		}
+		goal.render(batcher);
 		
 		//b2dr.render(myWorld.gameWorldPhysics, b2dCam.combined);
 
