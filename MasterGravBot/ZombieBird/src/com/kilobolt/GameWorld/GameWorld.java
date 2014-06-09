@@ -56,8 +56,8 @@ public class GameWorld {
 			
 			float screenWidth = Gdx.graphics.getWidth();
 			float screenHeight = Gdx.graphics.getHeight();
-			float gameWidth = 136;
-			float gameHeight = screenHeight / (screenWidth / gameWidth);
+			float gameWidth = 132;
+			float gameHeight = (screenHeight / (screenWidth / gameWidth)) + 6;
 			
 
 			if (gBVec.x < (width / (PPM * 2))) {
@@ -66,7 +66,7 @@ public class GameWorld {
 				gravBot.getBody().setAngularVelocity(0);
 			}
 			if (gBVec.x > (gameWidth - (width / 2)) / PPM) {
-				gravBot.getBody().setTransform((gameWidth - (width / 2)) / PPM , gBVec.y, 0);
+				gravBot.getBody().setTransform((gameWidth - (width / 2)) / PPM  , gBVec.y, 0);
 				gravBot.getBody().setLinearVelocity(new Vector2(0,0));
 				gravBot.getBody().setAngularVelocity(0);
 			}

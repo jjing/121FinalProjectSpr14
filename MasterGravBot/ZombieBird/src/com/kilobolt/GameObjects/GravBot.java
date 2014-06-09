@@ -16,7 +16,7 @@ public class GravBot extends B2DSprite {
 	public GravBot( Body body ){
 		super( body );
 		
-		Texture tex =  new Texture(Gdx.files.internal("data/bunny.png"));
+		Texture tex =  new Texture(Gdx.files.internal("data/crate.png"));
 		TextureRegion[] GravBotAnimations = TextureRegion.split(tex, 32, 32)[0];
 		setAnimation( GravBotAnimations , 1 / 12f );
 	}
