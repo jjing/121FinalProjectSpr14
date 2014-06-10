@@ -67,11 +67,11 @@ public class GameRenderer {
 				.getMenuButtons();
 
 		cam = new OrthographicCamera();
-		cam.setToOrtho(false, 132  , gameHeight );
+		cam.setToOrtho(true, 132  , gameHeight );
 
 		//needed to render box2D Objects
 		b2dCam = new OrthographicCamera();
-		b2dCam.setToOrtho(false, 132 / PPM , gameHeight / PPM);
+		b2dCam.setToOrtho(true, 132 / PPM , gameHeight / PPM);
 		
 		batcher = new SpriteBatch();
 		batcher.setProjectionMatrix(cam.combined);
@@ -81,8 +81,6 @@ public class GameRenderer {
 		initGameObjects();
 		initAssets();
 
-		transitionColor = new Color();
-		prepareTransition(255, 255, 255, .5f);
 	}
 
 	private void initGameObjects() {
@@ -172,6 +170,55 @@ public class GameRenderer {
 	private void drawHighScore() {
 		batcher.draw(highScore, 22, midPointY - 50, 96, 14);
 	}
+	
+	private void drawHud(){
+
+		batcher.begin();
+		//batcher.disableBlending();
+		
+		//batcher.enableBlending();
+		String speedY = formatSpeedString( gravBot.GetVelocity().y );
+		String speedX = formatSpeedString( gravBot.GetVelocity().x );
+		
+		//Y velocity UI
+		AssetLoader.shadow.draw(batcher, "Y:" + speedY, (10 ) - ( 3 * speedY.length() - 1), 12);
+		AssetLoader.font.draw(batcher, "Y:" + speedY, (10 ) - ( 3 * speedY.length() - 1), 11);
+
+		//X velocity UI
+		AssetLoader.shadow.draw(batcher, "X:" + speedX, (136 - 40 ) - ( 3 * speedY.length() - 1), 12);
+		AssetLoader.font.draw(batcher, "X:" + speedX, (136 - 40  ) - ( 3 * speedY.length() - 1), 11);
+		
+		
+		//Number of Swipes UI-- need to find a way to keep count of swipes
+		//AssetLoader.shadow.draw(batcher, "Swipes:" + speedX, (136 - 40 ) - ( 3 * speedY.length() - 1), 100);
+		//AssetLoader.font.draw(batcher, "Swipes" + speedX, (136 - 40  ) - ( 3 * speedY.length() - 1), 99);
+		
+		batcher.end();
+		
+	}
+	
+	//format speed font strings correctly
+	private String formatSpeedString( float speed ){
+		String number = speed + "";
+	
+		if( number.length() <= 3 ){
+			return number;
+		}
+			
+		if( speed > 0f ){	
+			if( speed < 10f )
+				return number.substring(0 , 3);
+			else
+				return number.substring(0 , 4);
+		}else{
+			if( speed > -10f )
+				return number.substring(0 , 4);
+			else
+				return number.substring(0 , 5);
+		}
+	
+		
+	}
 
 	public void render(float delta, float runTime) {
 
@@ -186,34 +233,12 @@ public class GameRenderer {
 			obstacles.render(batcher);
 		}
 		goal.render(batcher);
-
+		
+		//draw UI hud
+		drawHud();
 		//b2dr.render(myWorld.gameWorldPhysics, b2dCam.combined);
 
 	}
 
-	public void prepareTransition(int r, int g, int b, float duration) {
-		transitionColor.set(r / 255.0f, g / 255.0f, b / 255.0f, 1);
-		alpha.setValue(1);
-		Tween.registerAccessor(Value.class, new ValueAccessor());
-		manager = new TweenManager();
-		Tween.to(alpha, -1, duration).target(0)
-				.ease(TweenEquations.easeOutQuad).start(manager);
-	}
-
-	
-	private void drawTransition(float delta) {
-		if (alpha.getValue() > 0) {
-			manager.update(delta);
-			Gdx.gl.glEnable(GL10.GL_BLEND);
-			Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
-			shapeRenderer.begin(ShapeType.Filled);
-			shapeRenderer.setColor(transitionColor.r, transitionColor.g,
-					transitionColor.b, alpha.getValue());
-			shapeRenderer.rect(0, 0, 136, 300);
-			shapeRenderer.end();
-			Gdx.gl.glDisable(GL10.GL_BLEND);
-
-		}
-	}
 
 }

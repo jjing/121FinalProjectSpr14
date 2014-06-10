@@ -262,16 +262,6 @@ public class GameWorld {
 		currentState = GameState.RUNNING;
 	}
 
-	public void ready() {
-		currentState = GameState.READY;
-		renderer.prepareTransition(0, 0, 0, 1f);
-	}
-
-	public void restart() {
-		score = 0;
-		ready();
-	}
-
 	public boolean isReady() {
 		return currentState == GameState.READY;
 	}

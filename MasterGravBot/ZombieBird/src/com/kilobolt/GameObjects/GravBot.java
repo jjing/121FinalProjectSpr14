@@ -3,6 +3,7 @@ package com.kilobolt.GameObjects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 //import com.kilobolt.ZBHelpers.AssetLoader;
 import com.kilobolt.ZBHelpers.B2DSprite;
@@ -21,6 +22,8 @@ public class GravBot extends B2DSprite {
 		TextureRegion[] GravBotAnimations = { gravBot};
 		setAnimation( GravBotAnimations , 1 / 12f );
 	}
+	
+	public Vector2 GetVelocity(){	return body.getLinearVelocity();}
 	
 	public void MoveUp(){
 		
