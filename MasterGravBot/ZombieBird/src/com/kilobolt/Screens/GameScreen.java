@@ -54,10 +54,14 @@ public class GameScreen implements Screen, GestureListener {
 	}
 
 	@Override public boolean fling(float velocityX, float velocityY, int button) {
-		if (velocityY < -100) GameWorld.gameWorldPhysics.setGravity( new Vector2(0,100) );
-		else if (velocityY > 100)  GameWorld.gameWorldPhysics.setGravity( new Vector2(0,-100) );
-		else if (velocityX < -100) GameWorld.gameWorldPhysics.setGravity( new Vector2(-100,0) );
-		else if (velocityX > 100)  GameWorld.gameWorldPhysics.setGravity( new Vector2(100,0) );
+		if(Math.abs(velocityY)>Math.abs(velocityX)){
+			if (velocityY > -100) GameWorld.gameWorldPhysics.setGravity( new Vector2(0,100) );
+		    if (velocityY < 100)  GameWorld.gameWorldPhysics.setGravity( new Vector2(0,-100) );
+		}
+		if(Math.abs(velocityX)>Math.abs(velocityY)){
+			if (velocityX < -100) GameWorld.gameWorldPhysics.setGravity( new Vector2(-100,0) );
+			if (velocityX > 100)  GameWorld.gameWorldPhysics.setGravity( new Vector2(100,0) );
+		}
 		return false;
 	}
 

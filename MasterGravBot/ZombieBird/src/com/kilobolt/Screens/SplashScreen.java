@@ -109,6 +109,7 @@ public class SplashScreen implements Screen, InputProcessor{
 		manager.update(delta);
 		//make background black
 		Gdx.gl.glClearColor(0, 0, 0, 0);
+		
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		batcher.begin();
 		touchTextSprite.draw(batcher);
