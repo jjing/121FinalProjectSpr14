@@ -69,7 +69,7 @@ public class GameWorld {
 
 		float screenWidth = Gdx.graphics.getWidth();
 		float screenHeight = Gdx.graphics.getHeight();
-		float gameWidth = 136;
+		float gameWidth = 132;
 		float gameHeight = screenHeight / (screenWidth / gameWidth);
 
 
@@ -101,7 +101,7 @@ public class GameWorld {
 			if(currentLevel >= levels.size()){
 				Gdx.app.exit();
 			}
-			gravBot.getBody().setTransform(0, 0, 0);
+			gravBot.getBody().setTransform(.16f, 0, 0);
 			gravBot.getBody().setLinearVelocity(new Vector2(0,0));
 			gravBot.getBody().setAngularVelocity(0);
 			destroyLevel();
@@ -222,19 +222,28 @@ public class GameWorld {
 		Level level1 = new Level();
 		Level level2 = new Level();
 		Level level3 = new Level();
+		Level level4 = new Level();
 		level1.positions.add(new Vector2(16, 120));
 		level1.positions.add(new Vector2(48, 120));
 		level1.goalPos = new Vector2(16, 188);
 		levels.add(level1);
 		level2.positions.add(new Vector2(16, 120));
 		level2.positions.add(new Vector2(48, 120));
-		level2.positions.add(new Vector2(118, 120));
-		level2.positions.add(new Vector2(115, 16));
+		level2.positions.add(new Vector2(116, 120));
+		level2.positions.add(new Vector2(116, 16));
 		level2.goalPos = new Vector2(16, 188);
 		levels.add(level2);
-		level3.positions.add(new Vector2(68, 120));
-		level3.goalPos = new Vector2(16, 188);
+		level3.positions.add(new Vector2(16, 112));
+		level3.positions.add(new Vector2(116, 112));
+		level3.positions.add(new Vector2(116, 80));
+		level3.positions.add(new Vector2(80, 208));
+		level3.goalPos = new Vector2(16, 144);
 		levels.add(level3);
+		level4.positions.add(new Vector2(16, 80));
+		level4.positions.add(new Vector2(116, 112));
+		level4.positions.add(new Vector2(80, 208));
+		level4.goalPos = new Vector2(116, 176);
+		levels.add(level4);
 	}
 
 	public void startLevel(int index) {
@@ -246,7 +255,11 @@ public class GameWorld {
 	}
 
 	public void destroyLevel() {
+		for (Obstacle obstacle : obs) {
+			gameWorldPhysics.destroyBody(obstacle.getBody());
+		}
 		obs.clear();
+		gameWorldPhysics.destroyBody(goal.getBody());
 		goal = null;
 	}
 
