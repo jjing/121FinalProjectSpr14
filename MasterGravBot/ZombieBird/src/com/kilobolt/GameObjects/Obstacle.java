@@ -9,9 +9,9 @@ import com.kilobolt.ZBHelpers.B2DSprite;
 public class Obstacle extends B2DSprite {
 	public Obstacle( Body body ){
 		super( body );
+		
 		Texture tex =  new Texture(Gdx.files.internal("data/Obstacle.png"));
 		TextureRegion[] GravBotAnimations = TextureRegion.split(tex, 32, 32)[0];
 		setAnimation( GravBotAnimations , 1 / 12f );
-		//hello
 	}
 }
