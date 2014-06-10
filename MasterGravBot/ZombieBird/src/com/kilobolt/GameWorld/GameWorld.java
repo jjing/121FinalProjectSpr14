@@ -37,15 +37,9 @@ public class GameWorld {
 	public float Gravity = 0;
 	private ZBGame game;
 	
-	private GameState currentState;
-
-	public enum GameState {
-		MENU, READY, RUNNING, GAMEOVER, HIGHSCORE
-	}
 
 	public GameWorld(int midPointY) {
 		gameWorldPhysics = new World( new Vector2( 0 , 0 ) , false );
-		currentState = GameState.MENU;
 		this.midPointY = midPointY;
 		levels = new ArrayList<Level>();
 		obs = new ArrayList<Obstacle>();
@@ -118,24 +112,7 @@ public class GameWorld {
 		clampToScreen();	
 		runTime += delta;
 
-		switch (currentState) {
-		case READY:
-		case MENU:
-			updateReady(delta);
-			break;
-
-		case RUNNING:
-			updateRunning(delta);
-			break;
-		default:
-			break;
-		}
-
-	}
-
-
-
-	private void updateReady(float delta) {
+		
 
 	}
 
@@ -149,10 +126,6 @@ public class GameWorld {
 	public GravBot getGravBot() {
 		return gravBot;
 
-	}
-
-	public int getMidPointY() {
-		return midPointY;
 	}
 
 	private void createGravBot(){
@@ -263,37 +236,6 @@ public class GameWorld {
 		goal = null;
 	}
 
-	public int getScore() {
-		return score;
-	}
-
-	public void addScore(int increment) {
-		score += increment;
-	}
-
-	public void start() {
-		currentState = GameState.RUNNING;
-	}
-
-	public boolean isReady() {
-		return currentState == GameState.READY;
-	}
-
-	public boolean isGameOver() {
-		return currentState == GameState.GAMEOVER;
-	}
-
-	public boolean isHighScore() {
-		return currentState == GameState.HIGHSCORE;
-	}
-
-	public boolean isMenu() {
-		return currentState == GameState.MENU;
-	}
-
-	public boolean isRunning() {
-		return currentState == GameState.RUNNING;
-	}
 
 	public void setRenderer(GameRenderer renderer) {
 		this.renderer = renderer;
@@ -309,4 +251,8 @@ public class GameWorld {
 	}
 
 	public int getCurrentLevel() {return currentLevel;}
+	
+	public int getMidPointY(){
+		return midPointY;
+	}
 }

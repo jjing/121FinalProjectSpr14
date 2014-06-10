@@ -17,12 +17,14 @@ public class GravBot extends B2DSprite {
 	public GravBot( Body body ){
 		super( body );
 		
+		//adds sprites for gravBot
 		Texture tex =  new Texture(Gdx.files.internal("data/crate.png"));
 		TextureRegion gravBot = new TextureRegion(tex , 0 ,0 , 32, 32);
 		TextureRegion[] GravBotAnimations = { gravBot};
 		setAnimation( GravBotAnimations , 1 / 12f );
 	}
 	
+	//gets current velocity for gravBot
 	public Vector2 GetVelocity(){	return body.getLinearVelocity();}
 	
 	public void MoveUp(){
