@@ -7,11 +7,17 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.kilobolt.ZBHelpers.B2DSprite;
 
 public class Obstacle extends B2DSprite {
+	private Body mBody;
+	
 	public Obstacle( Body body ){
 		super( body );
-		
+		mBody = body;
 		Texture tex =  new Texture(Gdx.files.internal("data/Obstacle.png"));
 		TextureRegion[] GravBotAnimations = TextureRegion.split(tex, 32, 32)[0];
 		setAnimation( GravBotAnimations , 1 / 12f );
+	}
+	
+	public Body getBody() {
+		return mBody;
 	}
 }
