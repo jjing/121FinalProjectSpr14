@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.kilobolt.GameObjects.Goal;
 import com.kilobolt.GameObjects.GravBot;
 import com.kilobolt.GameObjects.Obstacle;
 import com.kilobolt.TweenAccessors.Value;
@@ -33,7 +34,7 @@ public class GameRenderer {
 	private OrthographicCamera cam;
 	private OrthographicCamera b2dCam;
 	private ShapeRenderer shapeRenderer;
-	private Box2DDebugRenderer b2dr;
+	//private Box2DDebugRenderer b2dr;
 	
 	private SpriteBatch batcher;
 
@@ -42,7 +43,7 @@ public class GameRenderer {
 	// Game Objects
 	private GravBot gravBot;
 	private List<Obstacle> obs;
-
+	private Goal goal;
 
 	// Game Assets
 	private TextureRegion bg, grass, birdMid, skullUp, skullDown, bar, ready,
@@ -86,6 +87,8 @@ public class GameRenderer {
 
 	private void initGameObjects() {
 		gravBot = myWorld.getGravBot();
+		obs = myWorld.obs;
+		goal = myWorld.goal;
 	}
 
 	private void initAssets() {
@@ -179,10 +182,11 @@ public class GameRenderer {
 		batcher.setProjectionMatrix( cam.combined );
 		gravBot.render(batcher);
 		
-		//for (Obstacle obstacles : obs) {
-			//obstacles.render(batcher);
-		//}
-		
+		for (Obstacle obstacles : obs) {
+			obstacles.render(batcher);
+		}
+		goal.render(batcher);
+
 		//b2dr.render(myWorld.gameWorldPhysics, b2dCam.combined);
 
 	}
@@ -196,6 +200,7 @@ public class GameRenderer {
 				.ease(TweenEquations.easeOutQuad).start(manager);
 	}
 
+	
 	private void drawTransition(float delta) {
 		if (alpha.getValue() > 0) {
 			manager.update(delta);

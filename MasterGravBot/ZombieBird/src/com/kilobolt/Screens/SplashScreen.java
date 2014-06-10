@@ -12,22 +12,21 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.kilobolt.TweenAccessors.SpriteAccessor;
 import com.kilobolt.ZBHelpers.AssetLoader;
-import com.kilobolt.ZBHelpers.InputHandler;
 import com.kilobolt.ZombieBird.ZBGame;
 
-public class SplashScreen implements Screen , InputProcessor {
+public class SplashScreen implements Screen, InputProcessor{
 
 	private TweenManager manager;
 	private SpriteBatch batcher;
 	private Sprite touchTextSprite;
 	private Sprite gravTitleSprite;
 	private Sprite botTitleSprite;
+	private Sprite sprite;
+	private ZBGame game;
 	//private GestureDetector gestureDetector;
 	
-	private ZBGame game;
 
 	public SplashScreen(ZBGame game) {
 		this.game = game;

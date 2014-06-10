@@ -4,9 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.kilobolt.ZBHelpers.AssetLoader;
+//import com.kilobolt.ZBHelpers.AssetLoader;
 import com.kilobolt.ZBHelpers.B2DSprite;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+//import com.badlogic.gdx.scenes.scene2d.Actor;
 
 
 //extends from b2dSprite to do all the work of animating sprites
