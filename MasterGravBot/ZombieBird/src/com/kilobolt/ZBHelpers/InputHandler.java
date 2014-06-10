@@ -44,60 +44,16 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		
-		screenX = scaleX(screenX);
-		screenY = scaleY(screenY);
-
-		if (myWorld.isMenu()) {
-			playButton.isTouchDown(screenX, screenY);
-		} else if (myWorld.isReady()) {
-			myWorld.start();
-
-		} else if (myWorld.isRunning()) {
-
-		}
-
-		if (myWorld.isGameOver() || myWorld.isHighScore()) {
-			myWorld.restart();
-		}
-
 		return true;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		screenX = scaleX(screenX);
-		screenY = scaleY(screenY);
-
-		if (myWorld.isMenu()) {
-			if (playButton.isTouchUp(screenX, screenY)) {
-				myWorld.ready();
-				return true;
-			}
-		}
-
 		return false;
 	}
 
 	@Override
 	public boolean keyDown(int keycode) {
-
-		// Can now use Space Bar to play the game
-		if (keycode == Keys.SPACE) {
-
-			if (myWorld.isMenu()) {
-				myWorld.ready();
-			} else if (myWorld.isReady()) {
-				myWorld.start();
-			}
-
-
-			if (myWorld.isGameOver() || myWorld.isHighScore()) {
-				myWorld.restart();
-			}
-
-		}
-
 		return false;
 	}
 
